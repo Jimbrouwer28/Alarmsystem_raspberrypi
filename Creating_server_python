@@ -1,0 +1,23 @@
+import socket
+
+# 192.168.42.3 == Stef / Server / Sender
+# 192.168.42.8 == Jelle / Client / Reciever
+
+server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+host = ''
+port = 5005
+
+server.bind((host, port))
+
+# queue up to 5 requests
+server.listen(5)
+
+while True:
+    clientsocket, addr = server.accept()
+
+    print('Got a connection from %s' % str(addr))
+
+    message = 'The data to send'
+    clientsocket.send(message.encode('ascii'))
+    clientsocket.close()
